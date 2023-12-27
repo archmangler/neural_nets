@@ -1,6 +1,16 @@
 # Hopfield Network Demonstration
 
 * Objective: Demonstrate the pattern recognition (associative memory) capabilities of the hopfield network.
+
+* Neural Network configuration, Test and Train Data:
+
+```
+    network = HopfieldNetwork(9)
+    network.train(np.array([1,1,1,1,0,0,1,1,1]))
+    network.train(np.array([1,1,1,0,1,0,0,1,0]))
+    network.recall(np.array([1,0,1,0,1,0,0,1,0]))
+```
+
 * run output for basic hopfield network implementation
 
 ```
