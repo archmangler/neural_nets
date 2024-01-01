@@ -20,7 +20,6 @@ class Layer:
         net_input = np.dot(x,self.weights) + self.bias
         self.last_activation = self.apply_activation_function(net_input)
         return self.last_activation
-
     def apply_activation_function(self, x):
         if self.activation_function == 'sigmoid':
             return 1/(1+np.exp(-x))
@@ -32,10 +31,8 @@ class Layer:
 class NeuralNetwork:
     def __init__(self):
         self.layers = []
-
-    def add_layer(self,layer):
+    def add_layer(self, layer):
         self.layers.append(layer)
-
     #forward propagation function
     def forward_propagation(self,x):
         for layer in self.layers:
@@ -61,14 +58,16 @@ class NeuralNetwork:
             else:
                 # i+ 1 but in the reversed order (so it is the previous layer - input)
                 next_layer = self.layers[i+1]
-                actual_layer.delta = np.dot(next_layer.weights, next_layer.delta) * actual_layer.apply_activation_function_derivative(actual_layer.last_activation)
+                actual_layer.delta = np.dot(next_layer.weights, next_layer.delta) * actual_layer.\
+                    apply_activation_function_derivative(actual_layer.last_activation)
         #we have the delta  values we just have to update the weights
         for i in range(len(self.layers)):
             actual_layer = self.layers[i]
             # the input is either the previous layer's output
             #or the inputs themselves (if this is the hidden layer)
             input_to_use = np.atleast_2d(inputs if i==0 else self.layers[i-1].last_activation)
-            actual_layer.dw = actual_layer.delta * input_to_use.T * learning_rate + momentum * actual_layer.previous_weight_change
+            actual_layer.dw = actual_layer.delta * input_to_use.T * learning_rate + momentum * actual_layer.\
+                previous_weight_change
             actual_layer.previous_weight_change = actual_layer.dw
 
     def train(self, features, labels, learning_rate, max_epochs):
